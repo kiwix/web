@@ -1,0 +1,77 @@
+<!doctype html>
+<html class="js" dir="ltr" lang="en-US"><head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <title>Submit Feedback :: Kiwix Input</title>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <link rel="stylesheet" media="screen,projection,tv" href="skin/feedback-min.css">
+  </head>
+  <body id="" class="html-ltr">
+    
+    <div id="body"><div class="funnel">
+	
+	<article id="happy" style="display: block;">
+	<header>
+	<h1>
+	  Why did you download Kiwix?
+	</h1>
+	<p>
+	Thank you for downloading Kiwix. Help us improve it!
+	</p>
+	</header>
+	
+	<section class="content">
+	<form action="/en-US/feedback" method="post" autocomplete="off">
+	  
+	  <div style="display:none"><input name="csrfmiddlewaretoken" value="78badb75aa1aeeec8b59c25023d2fbc4" type="hidden"></div>
+	  <div class="fields">
+	    <div>
+	      <label for="happy-description">Please describe your motivation and needs</label>
+	      <p><textarea id="happy-description" data-max-length="242" rows="10" cols="40" name="description"></textarea></p>
+	      <div id="happy-description-counter" class="characters-remaining">140</div>
+	      
+	    </div>
+	  </div>
+	  
+	  <div id="happy-submit" class="submit">
+	    <a class="disabled" href="#" data-waittext="Submitting Feedback">
+	      <span>Submit Feedback</span>
+	    </a>
+	    <span></span>
+	    <noscript>
+	    <button type="submit">Submit Feedback</button>
+	    </noscript>
+	  </div>
+	  
+	  <div class="alt-idea">
+	    <em></em>
+	    <span>
+	    If you have an idea to offer us instead, please use our
+	    <a href="#idea"><span></span><a href="http://requestafeature.kiwix.org">request a feature</a>.
+	    </span>
+	  </div>
+	  
+	  <input id="happy-manufacturer" class="manufacturer" name="manufacturer" type="hidden">
+	  <input id="happy-device" class="device" name="device" type="hidden">
+	  <input name="_type" value="1" id="happy-_type" type="hidden">
+	  
+	</form>
+	</section>
+	
+	<span class="fade"></span>
+	</article>  
+    </div></div>
+    
+    <footer id="footer">
+    <div id="footer-contents" class="funnel">
+    </div>
+    </footer>
+    <script src="skin/feedback-min.js"></script>    
+    <script type="text/javascript">
+    //<![CDATA[
+    _tag.dcsCollect();
+    //]]>
+    </script>
+</body></html>
