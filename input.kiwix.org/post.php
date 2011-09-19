@@ -6,7 +6,7 @@
     $version = $_POST["version"];
     $browser = $_SERVER['HTTP_USER_AGENT'];
 
-    $to = "emmanuel@engelhart.org";
+    $to = "feedback@kiwix.org";
     $from = "Kiwix Feedback System <feedback@kiwix.org>";
     $subject = "Kiwix Feedback from $country ($ip)";
     $headers = "From: $from\r\n";
