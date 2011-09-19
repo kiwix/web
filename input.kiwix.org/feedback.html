@@ -5,6 +5,27 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+<SCRIPT language="Javascript">
+function queryString(parameter) { 
+  var loc = location.search.substring(1, location.search.length);
+  var param_value = false;
+
+  var params = loc.split("&");
+  for (i=0; i<params.length;i++) {
+      param_name = params[i].substring(0,params[i].indexOf('='));
+      if (param_name == parameter) {
+          param_value = params[i].substring(params[i].indexOf('=')+1)
+      }
+  }
+  if (param_value) {
+      return param_value;
+  }
+  else {
+      return "unknown"; //Here determine return if no parameter is found
+  }
+}
+</script>    
     
     <link rel="stylesheet" media="screen,projection,tv" href="skin/feedback-min.css">
   </head>
@@ -55,15 +76,18 @@
 	<a href="#intro" title="Go Back">Go Back<strong></strong></a>
 	</nav>
 	</header>
-	
+
 	<section class="content">
-	<form action="/en-US/feedback" method="post" autocomplete="off">
+	<form action="/post.php" method="post" autocomplete="off" onsubmit="this.getElementsByTagName('input')[0].setAttribute('value', queryString('version'))">
 	  
-	  <div style="display:none"><input name="csrfmiddlewaretoken" value="78badb75aa1aeeec8b59c25023d2fbc4" type="hidden"></div>
+	  <div style="display:none">
+	    <input name="version" type="hidden">
+	    <input name="input" value="feedback - sad" type="hidden">
+	  </div>
 	  <div class="fields">
 	    <div>
 	      <label for="sad-description">Please describe your problem below.</label>
-	      <p><textarea id="sad-description" data-max-length="242" rows="10" cols="40" name="description"></textarea></p>
+	      <p><textarea id="sad-description" data-max-length="242" rows="10" cols="40" name="message"></textarea></p>
 	      <div id="sad-description-counter" class="characters-remaining">242</div>
 	      
 	    </div>
@@ -86,11 +110,7 @@
 	    <a href="#idea"><span></span><a href="http://requestafeature.kiwix.org">request a feature</a>.
 	    </span>
 	  </div>
-	  
-	  <input id="sad-manufacturer" class="manufacturer" name="manufacturer" type="hidden">
-	  <input id="sad-device" class="device" name="device" type="hidden">
-	  <input name="_type" value="2" id="sad-_type" type="hidden">
-	  
+
 	</form>
 	</section>
 	
@@ -110,13 +130,17 @@
 	</header>
 	
 	<section class="content">
-	<form action="/en-US/feedback" method="post" autocomplete="off">
+	<form action="/post.php" method="post" autocomplete="off" onsubmit="this.getElementsByTagName('input')[0].setAttribute('value', queryString('version'))">
 	  
-	  <div style="display:none"><input name="csrfmiddlewaretoken" value="78badb75aa1aeeec8b59c25023d2fbc4" type="hidden"></div>
+	  <div style="display:none">
+	    <input name="version" type="hidden">
+	    <input name="input" value="feedback - idea" type="hidden">
+	  </div>
+
 	  <div class="fields">
 	    <div>
 	      <label for="idea-description">Describe your idea below.</label>
-	      <p><textarea id="idea-description" data-max-length="250" rows="10" cols="40" name="description"></textarea></p>
+	      <p><textarea id="idea-description" data-max-length="250" rows="10" cols="40" name="message"></textarea></p>
 	      <div id="idea-description-counter" class="characters-remaining">250</div>
 	      
 	    </div>
@@ -131,11 +155,6 @@
 	    <button type="submit">Submit Feedback</button>
 	    </noscript>
 	  </div>
-	  
-	  
-	  <input id="idea-manufacturer" class="manufacturer" name="manufacturer" type="hidden">
-	  <input id="idea-device" class="device" name="device" type="hidden">
-	  <input name="_type" value="3" id="idea-_type" type="hidden">
 	  
 	</form>
 	</section>
@@ -156,13 +175,16 @@
 	</header>
 	
 	<section class="content">
-	<form action="/en-US/feedback" method="post" autocomplete="off">
+	<form action="/post.php" method="post" autocomplete="off" onsubmit="this.getElementsByTagName('input')[0].setAttribute('value', queryString('version'))">
 	  
-	  <div style="display:none"><input name="csrfmiddlewaretoken" value="78badb75aa1aeeec8b59c25023d2fbc4" type="hidden"></div>
+	  <div style="display:none">
+	    <input name="version" type="hidden">
+	    <input name="input" value="feedback - happy" type="hidden">
+	  </div>
 	  <div class="fields">
 	    <div>
 	      <label for="happy-description">Please describe what you liked.</label>
-	      <p><textarea id="happy-description" data-max-length="242" rows="10" cols="40" name="description"></textarea></p>
+	      <p><textarea id="happy-description" data-max-length="242" rows="10" cols="40" name="message"></textarea></p>
 	      <div id="happy-description-counter" class="characters-remaining">242</div>
 	      
 	    </div>
@@ -185,10 +207,6 @@
 	    <a href="#idea"><span></span><a href="http://requestafeature.kiwix.org">request a feature</a>.
 	    </span>
 	  </div>
-	  
-	  <input id="happy-manufacturer" class="manufacturer" name="manufacturer" type="hidden">
-	  <input id="happy-device" class="device" name="device" type="hidden">
-	  <input name="_type" value="1" id="happy-_type" type="hidden">
 	  
 	</form>
 	</section>

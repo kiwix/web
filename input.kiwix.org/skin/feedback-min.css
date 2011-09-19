@@ -213,7 +213,7 @@ top:2px;
 
 article .content .submit a.waiting {
 top:2px;
-background:0;
+background:-moz-linear-gradient(#d6d6d6,#c3c3c3);
 -moz-box-shadow:0 3px 0 #bababa;
 box-shadow:0 3px 0 #bababa;
 text-shadow:0 -1px 0 #c4c4c4;
