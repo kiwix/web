@@ -1,0 +1,92 @@
+<!doctype html>
+<html class="js" dir="ltr" lang="en-US"><head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <title>Submit Feedback :: Kiwix Input</title>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<SCRIPT language="Javascript">
+function queryString(parameter) { 
+  var loc = location.search.substring(1, location.search.length);
+  var param_value = false;
+
+  var params = loc.split("&");
+  for (i=0; i<params.length;i++) {
+      param_name = params[i].substring(0,params[i].indexOf('='));
+      if (param_name == parameter) {
+          param_value = params[i].substring(params[i].indexOf('=')+1)
+      }
+  }
+  if (param_value) {
+      return param_value;
+  }
+  else {
+      return "unknown"; //Here determine return if no parameter is found
+  }
+}
+</script>    
+
+    <link rel="stylesheet" media="screen,projection,tv" href="skin/feedback-min.css">
+  </head>
+  <body id="" class="html-ltr">
+    
+    <div id="body"><div class="funnel">
+	
+	<article id="happy" style="display: block;">
+	<header>
+	<h1>
+	  Why did you download Kiwix?
+	</h1>
+	<p>
+	Thank you for downloading new content.
+	</p>
+	</header>
+	
+	<section class="content">
+	<form action="/post.php" method="post" autocomplete="off" onsubmit="this.getElementsByTagName('input')[0].setAttribute('value', queryString('version'))">
+	  
+	  <div style="display:none">
+	    <input name="version" type="hidden">
+	    <input name="input" value="whycontent" type="hidden">
+	  </div>
+	  <div class="fields">
+	    <div>
+	      <label for="happy-description">Please describe your motivation for downloading this content.</label>
+	      <p><textarea id="happy-description" data-max-length="242" rows="10" cols="40" name="message"></textarea></p>
+	      <div id="happy-description-counter" class="characters-remaining">242</div>
+	      
+	    </div>
+	  </div>
+	  
+	  <div id="happy-submit" class="submit">
+	    <a class="disabled" href="#" data-waittext="Submitting Feedback">
+	      <span>Submit Feedback</span>
+	    </a>
+	    <span></span>
+	    <noscript>
+	    <button type="submit">Submit Feedback</button>
+	    </noscript>
+	  </div>
+	  
+	  <div class="alt-idea">
+	    <em></em>
+	    <span>
+	    If you have an idea to offer us instead, please use our
+	    <a href="#idea"><span></span><a href="http://requestafeature.kiwix.org">request a feature</a>.
+	    </span>
+	  </div>
+	  
+	</form>
+	</section>
+	
+	<span class="fade"></span>
+	</article>  
+    </div></div>
+    
+    <footer id="footer">
+    <div id="footer-contents" class="funnel">
+    </div>
+    </footer>
+    <script src="skin/feedback-min.js"></script>    
+</body></html>
