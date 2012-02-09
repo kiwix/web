@@ -1,5 +1,11 @@
 <?
-    $ip = $_SERVER['REMOTE_ADDR'];
+    $headers = apache_request_headers();
+    if (array_key_exists('X-Forwarded-For', $headers)){
+      $ip = $headers['X-Forwarded-For'];
+    } else {
+      $ip = $_SERVER["REMOTE_ADDR"];
+    }
+
     $country = geoip_country_name_by_name($ip) == "" ? "unknown country" : geoip_country_name_by_name($ip);
     $input = $_POST["input"];
     $message = $_POST["message"];
@@ -23,7 +29,8 @@
     $content .= "Browser - OS:  $browser\n";
     $content .= "Browser lang.: $language\n";
 
-    mail($to, $subject, $content, $headers);
+    if (strlen($message)>4)
+      mail($to, $subject, $content, $headers);
 
     header("Location: /thanks.html");
     exit();
