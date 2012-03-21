@@ -1,4 +1,6 @@
 <?
+    include 'sqlite.php.inc';
+
     $headers = apache_request_headers();
     if (array_key_exists('X-Forwarded-For', $headers)){
       $ip = $headers['X-Forwarded-For'];
@@ -29,8 +31,10 @@
     $content .= "Browser - OS:  $browser\n";
     $content .= "Browser lang.: $language\n";
 
-    if (strlen($message)>4)
+    if (strlen($message)>4) {
       mail($to, $subject, $content, $headers);
+      insertFeedbackToDatabase(date("Y-m-d H:i:s"), $ip, $message, $language, $input, $version, $browser);
+    }
 
     header("Location: /thanks.html");
     exit();
