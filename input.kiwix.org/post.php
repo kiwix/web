@@ -33,7 +33,7 @@
 
     if (strlen($message)>4) {
       mail($to, $subject, $content, $headers);
-      insertFeedbackToDatabase(date("Y-m-d H:i:s"), $ip, $message, $language, $input, $version, $browser);
+      insertFeedbackToDatabase(date("Y-m-d H:i:s"), $ip, $country, $message, $language, $input, $version, $browser);
     }
 
     header("Location: /thanks.html");
