@@ -31,7 +31,7 @@
     $content .= "Browser - OS:  $browser\n";
     $content .= "Browser lang.: $language\n";
 
-    if (strlen($message)>4) {
+    if (strlen($message)>4 && strpos($message, "link=http") === false) {
       mail($to, $subject, $content, $headers);
       insertFeedbackToDatabase(date("Y-m-d H:i:s"), $ip, $country, $message, $language, $input, $version, $browser);
     }
