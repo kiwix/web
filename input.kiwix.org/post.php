@@ -19,7 +19,8 @@
     $from = "Kiwix Feedback System <feedback@www.kiwix.org>";
     $subject = "Kiwix Feedback from $country ($ip)";
     $headers = "From: $from\r\n";
-    $headers .= "Content-type: text/plain\r\n";
+    $headers .= "Content-Type: text/plain; charset=utf-8\r\n";
+    $headers .= "Content-Transfer-Encoding: 8bit\r\n";
 
     $content  = "MESSAGE\n==================================================\n";
     $content .= "$message\n\n";
