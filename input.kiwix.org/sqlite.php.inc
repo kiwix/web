@@ -1,4 +1,4 @@
-1;2802;0c<?
+<?
 function createOrOpenFeedbackDatabase() {
   try {
     $database = new SQLiteDatabase('input.kiwix.org.sqlite', 0666, $error);
