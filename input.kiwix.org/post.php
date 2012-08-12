@@ -1,4 +1,5 @@
 <?
+    mb_internal_encoding("UTF-8");
     include 'sqlite.php.inc';
 
     $headers = apache_request_headers();
@@ -32,7 +33,10 @@
     $content .= "Browser - OS:  $browser\n";
     $content .= "Browser lang.: $language\n";
 
-    if (strlen($message)>4 && strpos($message, "link=http") === false) {
+    if (strlen($message)>4 && 
+        strpos($message, "link=http") === false && 
+	strpos($message, "href=") === false && 
+	strpos($message, "[link]") === false) {
       mail($to, $subject, $content, $headers);
       insertFeedbackToDatabase(date("Y-m-d H:i:s"), $ip, $country, $message, $language, $input, $version, $browser);
     }
