@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Kiwix Mobile Download Page</title>
+<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+</head>
+<body>
+
+	<div class="container">
+<header>
+<h1>Kiwix ZIM Contents</h1>
+
+<!-- <fieldset> -->
+<p><legend>Content Downloads Filter</legend></p>
+<p><label for="contentselector">Content Type:</label></p>
+<p><select id="contentselector">
+	<option value="wikipedia">Wikipedia</option>
+</select></p>
+<!-- <p><span class="help-block">Choose whithin Wikipedia, Ubuntu, Wikileaks, etc.</span></p> -->
+<p><label for="languageselector">Language:</label></p>
+<p><select id="languageselector">
+	<option value="auto">Auto-detect</option>
+	<option value="en">en</option>
+	<option value="fr">fr</option>
+	<option value="de">de</option>
+</select></p>
+<p><label for="downloadmethodselector">Download Link:</label></p>
+<p><select id="downloadmethodselector">
+	<option value="http">HTTP (easier, can be slow)</option>
+	<option value="bittorrent">Bitorrent (faster, requires a torrent client)</option>
+</select></p>
+<p><button class="btn btn-primary" id="fetch">Filter</button></p>
+<!-- </fieldset> -->
+
+</header>
+
+<p><legend>Available downloads</legend></p>
+<ul id="list" class="nav nav-tabs nav-stacked">
+	<li class="active">Please, filter out the contents you want to be presented to…</li>
+</ul>
+<div id="results">
+</div>
+
+</div>
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$("#fetch").click(function() {
+	var content_type = $("#contentselector").val();
+	var language = $("#languageselector").val();
+	if (language == 'auto') {
+		var url = 'http://www.kiwix.org/wiki/Special:MyLanguage/' + content_type;
+	} else {
+		var url='http://www.kiwix.org/wiki/'+ content_type + '/' + language;
+	}
+	$('#results').empty();
+	$('#list').empty();
+	$('#results').load(url + ' #zimtable', function() {
+
+		// change link to all archives
+		var all_a_elem = $('#zimtable tr:last-child a:last-child');
+		var all_url = all_a_elem.attr('href');
+		all_url = 'http://www.kiwix.org' + all_url;
+		all_a_elem.attr('href', all_url);
+
+		// remove md5 link
+		$('#zimtable a').each(function () {
+			if ($(this).attr('href').indexOf('.md5') != -1) {
+				$(this).parent().parent().remove();
+			}
+		});
+
+		// download bitorrent ; are there torrent clients on android?
+		$('#zimtable a').each(function () {
+			if ($(this).attr('href').indexOf('.torrent') != -1) {
+				$(this).parent().remove();
+			}
+		});
+
+		$('#zimtable tr:not(:last-child) th:last-child').remove();
+		$('#zimtable tr:not(:last-child) td:last-child').remove();
+
+
+		//
+		// loop on each row and rebuild the table for easier reading on mobile
+		//
+
+		// remove last row (link to all)
+		try {
+			all_a_elem.parent().parent().parent().remove();
+		} catch (e) {alert(e);}
+		// remove first row (headers)
+		$('#zimtable tr:first-child').remove();
+
+		$('#zimtable tr:visible').each(function (){
+			var zim_lang_code = $(this).children('td:first-child').html();
+			zim_lang_code = $.trim(zim_lang_code);
+			var zim_lang_name = $(this).children('td:gt(0)').html();
+			var zim_size = $(this).children('td:gt(1)').html();
+			var zim_date = $(this).children('td:gt(2)').html();
+			var zim_articles = $(this).children('td:gt(3)').html();
+			var zim_link = $($(this).children('td:gt(4)').html());
+			var zim_link_href = zim_link.attr('href');
+
+			var dl_method = $("#downloadmethodselector").val();
+			if (dl_method == 'bittorrent') {
+				zim_link_href += '.torrent';
+			}
+			var zim_link_name = zim_link.val();
+
+			li = $('<li><a href="' + zim_link_href + '"><strong>' + zim_lang_name + ' Wikipedia (' + zim_lang_code + ')</strong>: ' + zim_date + '<br/>Articles: ' + zim_articles + ' - ' + zim_size + 'GB</a></li>')
+			$('ul#list').append(li)
+		});
+		var all_li = $('<li></li>').append(all_a_elem)
+		$('ul#list').append(all_li)
+
+		$('#results').empty();
+	});
+});
+</script>
+</html>
