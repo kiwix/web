@@ -11,7 +11,6 @@
 <header>
 <h1>Kiwix ZIM Contents</h1>
 
-<!-- <fieldset> -->
 <p><legend>Content Downloads Filter</legend></p>
 <p><label for="contentselector">Content Type:</label></p>
 <p><select id="contentselector">
@@ -31,16 +30,28 @@
 	<option value="bittorrent">Bitorrent (faster, requires a torrent client)</option>
 </select></p>
 <p><button class="btn btn-primary" id="fetch">Filter</button></p>
-<!-- </fieldset> -->
-
 </header>
 
 <p><legend>Available downloads</legend></p>
 <ul id="list" class="nav nav-tabs nav-stacked">
 	<li class="active">Please, filter out the contents you want to be presented to…</li>
 </ul>
+
+<div class="alert">
+	<p>If your ZIM file weights more than 2GB, <strong>Kiwix for Android</strong> will not open it properly. It's a bug on our side which we are investigating.</p>
+	<p>If you want to use a ZIM file larger than 2GB, please split it using one of the following software:</p>
+	<ul>
+		<li> On Microsoft Windows: <a rel="nofollow" class="external text" href="http://www.jaist.ac.jp/~hoangle/filesj/">FSJ-Lite</a></li>
+		<li> On Apple Mac OSX: <a rel="nofollow" class="external text" href="http://loekjehe.home.xs4all.nl/Split&amp;Concat/">Split&amp;Concat</a></li>
+		<li> On GNU/Linux and with the console: <code>split --bytes=2000M my_big_file.zim</code></li>
+	</ul>
+	<p>Please note that most SD card limit files to 4GB.</p>
+</div>
+
 <div id="results">
 </div>
+
+
 
 </div>
 
