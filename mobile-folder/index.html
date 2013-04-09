@@ -21,9 +21,41 @@
 <p><label for="languageselector">Language:</label></p>
 <p><select id="languageselector">
 	<option value="auto">Auto-detect</option>
+	<option value="ar">العربية</option>
+	<option value="ca">Català</option>
+	<option value="da">Dansk</option>
+	<option value="de">Deutsch</option>
+	<option value="el">ελληνική</option>
 	<option value="en">en</option>
-	<option value="fr">fr</option>
-	<option value="de">de</option>
+	<option value="eo">Esperanto</option>
+	<option value="es">Español</option>
+	<option value="fa">فارسی</option>
+	<option value="fr">Français</option>
+	<option value="gn">Avañe'ẽ</option>
+	<option value="he">עברית</option>
+	<option value="hi">Hindi</option>
+	<option value="id">Bahasa Indonesia</option>
+	<option value="it">Italiano</option>
+	<option value="ja">日本語</option>
+	<option value="ko">한국어</option>
+	<option value="ml">മലയാളം</option>
+	<option value="mr">Marathi</option>
+	<option value="my">Burmese</option>
+	<option value="my">Burmese</option>
+	<option value="nl">Nederlands</option>
+	<option value="nn">Norsk (nynorsk)</option>
+	<option value="no">Norsk (bokmål)‎</option>
+	<option value="pl">Polski</option>
+	<option value="pt">Português</option>
+	<option value="ru">Русский</option>
+	<option value="th">ไทย</option>
+	<option value="tr">Türkçe</option>
+	<option value="ur">Urdu</option>
+	<option value="uz">Oʻzbekcha</option>
+	<option value="sv">Svenska</option>
+	<option value="sw">Swahili</option>
+	<option value="vi">Tiếng Việt</option>
+	<option value="zh">中文</option>
 </select></p>
 <p><label for="downloadmethodselector">Download Link:</label></p>
 <p><select id="downloadmethodselector">
@@ -63,7 +95,7 @@ $("#fetch").click(function() {
 	var content_type = $("#contentselector").val();
 	var language = $("#languageselector").val();
 	if (language == 'auto') {
-		var url = '/wiki/Special:MyLanguage/' + content_type;
+		var url = '/wiki/Special:MyLanguage/' + content_type + '/en';
 	} else {
 		var url='/wiki/'+ content_type + '/' + language;
 	}
