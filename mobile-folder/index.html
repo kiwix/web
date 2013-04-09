@@ -63,9 +63,9 @@ $("#fetch").click(function() {
 	var content_type = $("#contentselector").val();
 	var language = $("#languageselector").val();
 	if (language == 'auto') {
-		var url = 'http://www.kiwix.org/wiki/Special:MyLanguage/' + content_type;
+		var url = '/wiki/Special:MyLanguage/' + content_type;
 	} else {
-		var url='http://www.kiwix.org/wiki/'+ content_type + '/' + language;
+		var url='/wiki/'+ content_type + '/' + language;
 	}
 	$('#results').empty();
 	$('#list').empty();
