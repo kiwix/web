@@ -71,13 +71,13 @@
 </ul>
 
 <div class="alert">
-	<p>If your ZIM file weights more than 4GB, you might not be able to store it on your SD card due to filesystem limitations.</p>
-	<p>In this case, please split it using one of the following software:</p>
+	<p>If your ZIM file weights more than 4GB, you might encouter difficulties to copy it to your SD card. It's a known limitation of the FAT32 file system. To fix that problem, you can either reformat your SD card using NTFS or split the ZIM file in chunks using one of the following software:</p>
 	<ul>
 		<li> On Microsoft Windows: <a rel="nofollow" class="external text" href="http://www.jaist.ac.jp/~hoangle/filesj/">FSJ-Lite</a></li>
 		<li> On Apple Mac OSX: <a rel="nofollow" class="external text" href="http://loekjehe.home.xs4all.nl/Split&amp;Concat/">Split&amp;Concat</a></li>
 		<li> On GNU/Linux and with the console: <code>split --bytes=4000M my_big_file.zim</code></li>
 	</ul>
+	<p>The splitted ZIM files must be named xxx.zimaa, xxx.zimab, xxx.zimac, etc.</p>
 </div>
 
 <div id="results">
@@ -96,7 +96,6 @@ function load_content() {
 	} else {
 		var url='/wiki/'+ content_type + '/' + language;
 	}
-	var url = 'http://kiwix.org' + url;
 	$('#results').empty();
 	$('#list').empty();
 	$('#results').load(url + ' #zimtable', function() {
