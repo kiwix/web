@@ -88,6 +88,7 @@
 <script src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+var all_link = $('<li><a href="http://www.kiwix.org/wiki/Special:MyLanguage/Wikipedia_in_all_languages">→ List of Wikipedia downloads in all languages…</a></li>');
 function load_content() {
 	var content_type = $("#contentselector").val();
 	var language = $("#languageselector").val();
@@ -96,6 +97,10 @@ function load_content() {
 	} else {
 		var url='/wiki/'+ content_type + '/' + language;
 	}
+
+	// DEBUG OONLY
+	// url = 'http://kiwix.org' + url;
+
 	$('#results').empty();
 	$('#list').empty();
 	$('#results').load(url + ' #zimtable', function() {
@@ -162,7 +167,6 @@ function load_content() {
 	});
 }
 $(document).ready(function() {
-	var all_link = $('<li><a href="http://www.kiwix.org/wiki/Special:MyLanguage/Wikipedia_in_all_languages">→ List of Wikipedia downloads in all languages…</a></li>')
 	$('ul#list').append(all_link);
 	$("#fetch").click(load_content);
 	load_content();
