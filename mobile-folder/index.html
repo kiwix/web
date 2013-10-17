@@ -48,12 +48,11 @@
 	<option value="vi">Tiếng Việt</option>
 	<option value="zh">中文</option>
 </select></p>
-<p><label for="downloadmethodselector">Download method:</label></p>
-<p><select id="downloadmethodselector">
-	<option value="http">HTTP (easier, can be slow)</option>
-	<option value="bittorrent">Bitorrent (faster, requires a torrent client)</option>
-</select></p>
-<p><button class="btn btn-primary" id="fetch">Filter</button></p>
+
+<p><label>Download method:</label></p>
+<label>HTTP (easier, can be slow)</label><input type="radio" name="downloadmethodselector" value="http"><br>
+<label>Bitorrent (faster, requires a torrent client)</label><input type="radio" name="downloadmethodselector" value="bittorrent"><br>
+
 </header>
 
 <p><legend>Available downloads</legend></p>
@@ -141,7 +140,7 @@ function load_content() {
 			var zim_link = $($(this).children('td:gt(4)').html());
 			var zim_link_href = zim_link.attr('href');
 
-			var dl_method = $("#downloadmethodselector").val();
+			var dl_method = $("input[name='downloadmethodselector']:checked").val();
 			if (dl_method == 'bittorrent') {
 				zim_link_href += '.torrent';
 			}
@@ -157,11 +156,15 @@ function load_content() {
 		$('ul#list').append(all_link);
 	});
 }
+//loading base on browser agent language
+$("#languageselector option[value="+(navigator.language || navigator.userLanguage).substring(0,2)+"]").attr("selected",true);
+
 $(document).ready(function() {
 	$('ul#list').append(all_link);
-	$("#fetch").click(load_content);
+	$( 'input[name="downloadmethodselector"]:radio' ).change(load_content);
+	$("#languageselector").change(load_content);
 	load_content();
-	$("#languageselector option[value="+(navigator.language || navigator.userLanguage).substring(0,2)+"]").attr("selected",true);
+	
 });
 </script>
 </html>
