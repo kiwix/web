@@ -5,54 +5,35 @@
 <title>Kiwix Mobile Download Page</title>
 <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
 <link href="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.css" rel="stylesheet">
+<style>
+div#loadingBox {
+	position: fixed;
+	bottom: 12px;
+	right: 12px;
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 12px;
+	background-color: #000000;
+	color: #FFFFFF;
+	padding: 6px;
+	display: none;
+}
+</style>
 </head>
 <body>
+
 	<div class="container">
 <header>
-<h2>Download content for Kiwix</h2>
-<!-- <p><span class="help-block">Choose whithin Wikipedia, Ubuntu, Wikileaks, etc.</span></p> -->
-<p><label for="languageselector">Language:</label></p>
-<p><select id="languageselector">
-	<option value="ar">العربية</option>
-	<option value="ca">Català</option>
-	<option value="da">Dansk</option>
-	<option value="de">Deutsch</option>
-	<option value="el">ελληνική</option>
-	<option value="en">English</option>
-	<option value="eo">Esperanto</option>
-	<option value="es">Español</option>
-	<option value="fa">فارسی</option>
-	<option value="fr">Français</option>
-	<option value="gn">Avañe'ẽ</option>
-	<option value="he">עברית</option>
-	<option value="hi">Hindi</option>
-	<option value="id">Bahasa Indonesia</option>
-	<option value="it">Italiano</option>
-	<option value="ja">日本語</option>
-	<option value="ko">한국어</option>
-	<option value="ml">മലയാളം</option>
-	<option value="mr">Marathi</option>
-	<option value="my">Burmese</option>
-	<option value="nl">Nederlands</option>
-	<option value="nn">Norsk (nynorsk)</option>
-	<option value="no">Norsk (bokmål)‎</option>
-	<option value="pl">Polski</option>
-	<option value="pt">Português</option>
-	<option value="ru">Русский</option>
-	<option value="th">ไทย</option>
-	<option value="tr">Türkçe</option>
-	<option value="ur">Urdu</option>
-	<option value="uz">Oʻzbekcha</option>
-	<option value="sv">Svenska</option>
-	<option value="sw">Swahili</option>
-	<option value="vi">Tiếng Việt</option>
-	<option value="zh">中文</option>
-</select></p>
+	<h2>Download content for Kiwix</h2>
+	<!-- <p><span class="help-block">Choose whithin Wikipedia, Ubuntu, Wikileaks, etc.</span></p> -->
+	<p><label for="languageselector">Language:</label></p>
+	<p><select id="languageselector">
+	</select></p>
 
-<p><label>Download method:</label></p>
-<label>HTTP (easier, can be slow)</label><input type="radio" name="downloadmethodselector" value="http"><br>
-<label>Bitorrent (faster, requires a torrent client)</label><input type="radio" name="downloadmethodselector" value="bittorrent"><br>
-
+	<p><label>Download method:</label></p>
+	<p><select id="downloadmethodselector">
+	    <option value="http" selected="selected">HTTP (easier, can be slow)</option>
+	    <option value="bittorrent">Bittorrent (faster, requires a torrent client)</option>
+	</select></p>
 </header>
 
 <p><legend>Available downloads</legend></p>
@@ -60,7 +41,7 @@
 	<li class="active">Please, filter out the contents you want to be presented to…</li>
 </ul>
 
-<div class="alert">
+<div id="chunkalert" class="alert">
 	<p>If your ZIM file weights more than 4GB, you might encouter difficulties to copy it to your SD card. It's a known limitation of the FAT32 file system. To fix that problem, you can either reformat your SD card using NTFS or split the ZIM file in chunks using one of the following software:</p>
 	<ul>
 		<li> On Microsoft Windows: <a rel="nofollow" class="external text" href="http://www.jaist.ac.jp/~hoangle/filesj/">FSJ-Lite</a></li>
@@ -78,19 +59,25 @@
 <script src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-var all_link = $('<li><a href="http://www.kiwix.org/wiki/Special:MyLanguage/Wikipedia_in_all_languages">→ List of Wikipedia downloads in all languages…</a></li>');
-function load_content() {
-	var content_type = $("#contentselector").val();
-	var language = $("#languageselector").val();
-	if (language == 'auto') {
-		var url = '/wiki/Special:MyLanguage/' + content_type + '/en';
-	} else {
-		var url='/wiki/'+ content_type + '/' + language;
-	}
 
+var all_link = $('<li><a href="http://www.kiwix.org/wiki/Special:MyLanguage/Wikipedia_in_all_languages">→ List of Wikipedia downloads in all languages…</a></li>');
+
+function showLoading() {
+    $('#results').append('<div id="loadingBox">Loading...</div>');
+}
+
+function load_content() {
+	var language_code = ($("#languageselector").val()==null)?(navigator.language || navigator.userLanguage).substring(0,2):($("#languageselector").val());
+	
+	//var url ='/wiki/Special:Mylanguage/Wikipedia/'+language_code;
+	var url ='/wiki/Template:ZIMdumps';
 	// DEBUG OONLY
 	// url = 'http://kiwix.org' + url;
 
+	//clean language selector
+	$("#languageselector").html('');
+	
+	//clean results (loading text too)
 	$('#results').empty();
 	$('#list').empty();
 	$('#results').load(url + ' #zimtable', function() {
@@ -140,28 +127,42 @@ function load_content() {
 			var zim_link = $($(this).children('td:gt(4)').html());
 			var zim_link_href = zim_link.attr('href');
 
-			var dl_method = $("input[name='downloadmethodselector']:checked").val();
+			var dl_method = $("#downloadmethodselector").val();
 			if (dl_method == 'bittorrent') {
 				zim_link_href += '.torrent';
 			}
 			var zim_link_name = zim_link.val();
-
-			li = $('<li><a href="' + zim_link_href + '"><strong>' + zim_lang_name + ' Wikipedia (' + zim_lang_code + ')</strong>: ' + zim_date + '<br/>Articles: ' + zim_articles + ' - ' + zim_size + 'GB</a></li>')
-			$('ul#list').append(li)
+			
+			//show results for language selected
+			if (zim_lang_code==language_code) {
+				li = $('<li><a href="' + zim_link_href + '"><strong>' + zim_lang_name + ' Wikipedia (' + zim_lang_code + ')</strong>: ' + zim_date + '<br/>Articles: ' + zim_articles + ' - ' + zim_size + 'GB</a></li>')
+				$('ul#list').append(li);
+			}
+			
+			//making the languague selector from table
+			$("#languageselector").append('<option value="'+zim_lang_code+'">'+zim_lang_name+'</option>');
 		});
 		//var all_li = $('<li></li>').append(all_a_elem)
 		//$('ul#list').append(all_li)
 
 		$('#results').empty();
 		$('ul#list').append(all_link);
+		
+		//loading base on browser agent language
+                $("#languageselector option[value="+language_code+"]").attr("selected", "selected");
+                $('#languageselector').selectmenu('refresh',true);
+		//hideLoading();
 	});
+
+	//Show message Loading	
+	showLoading();
+	
 }
-//loading base on browser agent language
-$("#languageselector option[value="+(navigator.language || navigator.userLanguage).substring(0,2)+"]").attr("selected",true);
+
 
 $(document).ready(function() {
 	$('ul#list').append(all_link);
-	$( 'input[name="downloadmethodselector"]:radio' ).change(load_content);
+	$("#downloadmethodselector").change(load_content);
 	$("#languageselector").change(load_content);
 	load_content();
 	
