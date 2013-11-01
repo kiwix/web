@@ -1,59 +1,59 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8" />
-<title>Kiwix Mobile Download Page</title>
-<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-<link href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" rel="stylesheet">
-<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
-</head>
+ <head>
+  <meta charset="UTF-8" />
+  <title>Kiwix Mobile Download Page</title>
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  <link href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" rel="stylesheet">
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+ </head>
 <body>
+ <div id="container" class="container" style="display: none;">
+  <legend>Download content for Kiwix</legend>
+  <p><label for="languageselector">Language:</label></p>
+  <p><select id="languageselector"></select></p>
 
-	<div id="container" class="container" style="display: none;">
-	<legend>Download content for Kiwix</legend>
-
-	<p><label for="languageselector">Language:</label></p>
-	<p><select id="languageselector">
-	</select></p>
-
-	<p><label>Download method:</label></p>
-	<p><select id="downloadmethodselector">
-	    <option value="http" selected="selected">HTTP (easier, can be slow)</option>
-	    <option value="bittorrent">Bittorrent (faster, requires a torrent client)</option>
-	</select></p>
+  <p><label>Download method:</label></p>
+  <p><select id="downloadmethodselector">
+      <option value="http" selected="selected">HTTP (easier, can be slow)</option>
+      <option value="bittorrent">Bittorrent (faster, requires a torrent client)</option>
+  </select></p>
 
 
-<p><label id="loading"></label></p>
-<ul id="list" class="nav nav-tabs nav-stacked">
-	<li class="active">Please, filter out the contents you want to be presented to…</li>
-</ul>
+  <p><label id="loading">Available content:</label></p>
+  <ul id="list" class="nav nav-tabs nav-stacked">
+   <li class="active">Please, filter out the contents you want to be presented to…</li>
+  </ul>
 
-<div class="alert">
-	<p>If your ZIM file weights more than 4GB, you might encouter difficulties to copy it to your SD card. It's a known limitation of the FAT32 file system. To fix that problem, you can either reformat your SD card using NTFS or split the ZIM file in chunks using one of the following software:</p>
-	<ul>
-		<li> On Microsoft Windows: <a rel="nofollow" class="external text" href="http://www.jaist.ac.jp/~hoangle/filesj/">FSJ-Lite</a></li>
-		<li> On Apple Mac OSX: <a rel="nofollow" class="external text" href="http://loekjehe.home.xs4all.nl/Split&amp;Concat/">Split&amp;Concat</a></li>
-		<li> On GNU/Linux and with the console: <code>split --bytes=4000M my_big_file.zim</code></li>
-	</ul>
-	<p>The splitted ZIM files must be named xxx.zimaa, xxx.zimab, xxx.zimac, etc.</p>
-</div>
+ <div class="alert">
+  <p>If your ZIM file weights more than 4GB, you might encouter difficulties to copy it to your SD card. It's a known limitation of the FAT32 file system. To fix that problem, you can either reformat your SD card using NTFS or split the ZIM file in chunks using one of the following software:</p>
+  <ul>
+   <li> On Microsoft Windows: <a rel="nofollow" class="external text" href="http://www.jaist.ac.jp/~hoangle/filesj/">FSJ-Lite</a></li>
+   <li> On Apple Mac OSX: <a rel="nofollow" class="external text" href="http://loekjehe.home.xs4all.nl/Split&amp;Concat/">Split&amp;Concat</a></li>
+   <li> On GNU/Linux and with the console: <code>split --bytes=4000M my_big_file.zim</code></li>
+  </ul>
+  <p>The splitted ZIM files must be named xxx.zimaa, xxx.zimab, xxx.zimac, etc.</p>
+ </div>
 
-<div id="results">
-</div>
-
+ <div id="results">
+ </div>
 </div>
 <script type="text/javascript">
 
 var all_link = $('<li><a href="http://kiwix.org/wiki/Special:MyLanguage/Wikipedia_in_all_languages">→ List of Wikipedia downloads in all languages…</a></li>');
+//var language_code =get_language_code();
+//rows 
+var rows_download = new Array();
+var language_list = new Array();
 
 function load_content() {
-	var language_code = ($("#languageselector").val()==null)?(navigator.language || navigator.userLanguage).substring(0,2):($("#languageselector").val());
+	//var language_code = ;
 	
 	//var url ='/wiki/Special:Mylanguage/Wikipedia/'+language_code;
 	var url ='/wiki/Template:ZIMdumps';
 	// DEBUG OONLY
-	 url = 'http://kiwix.org' + url;
+	// url = 'http://kiwix.org' + url;
 	 
 	 //Show message Loading	
 	$('#loading').html('Loading...');
@@ -90,11 +90,7 @@ function load_content() {
 		$('#zimtable tr:not(:last-child) th:last-child').remove();
 		$('#zimtable tr:not(:last-child) td:last-child').remove();
 
-
-		//
 		// loop on each row and rebuild the table for easier reading on mobile
-		//
-
 		// remove last row (link to all)
 		try {
 			all_a_elem.parent().parent().parent().remove();
@@ -106,55 +102,74 @@ function load_content() {
 		var previousSelectValue;
 		
 		$('#zimtable tr:visible').each(function (){
-			var zim_lang_code = $(this).children('td:first-child').html();
-			zim_lang_code = $.trim(zim_lang_code);
-			var zim_lang_name = $(this).children('td:gt(0)').html();
-			var zim_size = $(this).children('td:gt(1)').html();
-			var zim_date = $(this).children('td:gt(2)').html();
-			var zim_articles = $(this).children('td:gt(3)').html();
-			var zim_link = $($(this).children('td:gt(4)').html());
-			var zim_link_href = zim_link.attr('href');
+			var row_download = new Object();
+			row_download.zim_lang_code = $.trim($(this).children('td:first-child').html());
+			row_download.zim_lang_name = $(this).children('td:gt(0)').html();
+			row_download.zim_size = $(this).children('td:gt(1)').html();
+			row_download.zim_date = $(this).children('td:gt(2)').html();
+			row_download.zim_articles = $(this).children('td:gt(3)').html();
+			row_download.zim_link = $($(this).children('td:gt(4)').html());
+			row_download.zim_link_href = row_download.zim_link.attr('href');
 
-			var dl_method = $("#downloadmethodselector").val();
-			if (dl_method == 'bittorrent') {
-				zim_link_href += '.torrent';
-			}
-			var zim_link_name = zim_link.val();
+			row_download.zim_link_name = row_download.zim_link.val();
 			
 			//show results for language selected
-			if (zim_lang_code==language_code) {
-				li = $('<li><a href="' + zim_link_href + '"><strong>' + zim_lang_name + ' Wikipedia (' + zim_lang_code + ')</strong>: ' + zim_date + '<br/>Articles: ' + zim_articles + ' - ' + zim_size + 'GB</a></li>')
-				$('ul#list').append(li);
-			}
-			
+
+			rows_download.push(row_download);
 			//making the languague selector from table
 			//adding item to selec if is not repeted
-			if (zim_lang_name!=previousSelectValue)
-				$("#languageselector").append('<option value="'+zim_lang_code+'">'+zim_lang_name+'</option>');
-			previousSelectValue = zim_lang_name;
+			if (row_download.zim_lang_name!=previousSelectValue)
+			{
+				$("#languageselector").append('<option value="'+row_download.zim_lang_code+'">'+row_download.zim_lang_name+'</option>');
+				//language_list.push('<option value="'+row_download.zim_lang_code+'">'+row_download.zim_lang_name+'</option>');
+			}
+			previousSelectValue = row_download.zim_lang_name;
 			
 		});
-		//var all_li = $('<li></li>').append(all_a_elem)
-		//$('ul#list').append(all_li)
-
-		$('#results').empty();
-		$('ul#list').append(all_link);
-		
-		//loading base on browser agent language
-      $("#languageselector option[value="+language_code+"]").attr("selected", "selected");
-      $('#languageselector').selectmenu('refresh',true);
       
 		//remove loading message	
-		$('#loading').html('Available content:');	
+		$('#loading').html('Available content:');
+		//make_select_language();
+		select_language();
+		show_result();
+		
 	});
 	
 }
+//show search result
+function show_result() {
+ $('#results').empty();
+ $('ul#list').empty();
+ var language_code =$("#languageselector").val();
 
+ $.each( rows_download, function(i,row_download){
+
+  if (row_download.zim_lang_code==language_code) 
+   $('ul#list').append(make_row(row_download));
+
+ });
+ $('ul#list').append(all_link);
+}
+//loading base on browser agent language
+function select_language() {
+      var language_code =((navigator.language || navigator.userLanguage).substring(0,2));
+      $("#languageselector option[value="+language_code+"]").attr("selected", "selected");
+      $('#languageselector').selectmenu('refresh',true);
+}
+//make download link row
+function make_row(row_download){
+  var dl_method = $("#downloadmethodselector").val();
+  if (dl_method == 'bittorrent') {
+    row_download.zim_link_href += '.torrent';
+  }
+  return $('<li><a href="' + row_download.zim_link_href + '"><strong>' + row_download.zim_lang_name + ' Wikipedia (' + row_download.zim_lang_code + ')</strong>: ' + row_download.zim_date + '<br/>Articles: ' + row_download.zim_articles + ' - ' + row_download.zim_size + 'GB</a></li>');
+}
 $(document).ready(function() {
+	load_content();	
 	$('ul#list').append(all_link);
-	$("#downloadmethodselector").change(load_content);
-	$("#languageselector").change(load_content);
-	load_content();
+	$("#downloadmethodselector").change(show_result);
+        $("#languageselector").change(show_result);
+	
 });
 </script>
 </html>
