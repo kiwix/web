@@ -53,7 +53,7 @@ function load_content() {
 	//var url ='/wiki/Special:Mylanguage/Wikipedia/'+language_code;
 	var url ='/wiki/Template:ZIMdumps';
 	// DEBUG OONLY
-	// url = 'http://kiwix.org' + url;
+	 url = 'http://kiwix.org' + url;
 	 
 	 //Show message Loading	
 	$('#loading').html('Loading...');
@@ -159,10 +159,11 @@ function select_language() {
 //make download link row
 function make_row(row_download){
   var dl_method = $("#downloadmethodselector").val();
+  var zim_link_href = row_download.zim_link_href;
   if (dl_method == 'bittorrent') {
-    row_download.zim_link_href += '.torrent';
+    zim_link_href += '.torrent';
   }
-  return $('<li><a href="' + row_download.zim_link_href + '"><strong>' + row_download.zim_lang_name + ' Wikipedia (' + row_download.zim_lang_code + ')</strong>: ' + row_download.zim_date + '<br/>Articles: ' + row_download.zim_articles + ' - ' + row_download.zim_size + 'GB</a></li>');
+  return $('<li><a href="' + zim_link_href + '"><strong>' + row_download.zim_lang_name + ' Wikipedia (' + row_download.zim_lang_code + ')</strong>: ' + row_download.zim_date + '<br/>Articles: ' + row_download.zim_articles + ' - ' + row_download.zim_size + 'GB</a></li>');
 }
 $(document).ready(function() {
 	load_content();	
