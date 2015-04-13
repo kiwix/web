@@ -7,6 +7,7 @@
   <link href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" rel="stylesheet">
   <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+  <script src="languages.js"></script>
  </head>
 <body>
  <div id="container" class="container" style="display: none;">
@@ -41,31 +42,25 @@
 </div>
 <script type="text/javascript">
 
-var all_link = $('<li><a href="http://www.kiwix.org/wiki/Special:MyLanguage/Wikipedia_in_all_languages">→ List of Wikipedia downloads in all languages…</a></li>');
-//var language_code =get_language_code();
-//rows 
+
+
+var all_link = $('<li><a href="http://www.kiwix.org/wiki/Special:MyLanguage/Content_in_all_languages">→ Available content in all languages…</a></li>');
 var rows_download = new Array();
 var language_list = new Array();
 
 function load_content() {
-	//var language_code = ;
-	
-	//var url ='/wiki/Special:Mylanguage/Wikipedia/'+language_code;
-	var url ='/wiki/Template:ZIMdumps';
-	// DEBUG OONLY
-	 url = 'http://www.kiwix.org' + url;
-	 
-	 //Show message Loading	
+	// Show message Loading	
 	$('#loading').html('Loading...');
 
-	//clean language selector
+	// Clean language selector
 	$("#languageselector").html('');
 	
-	//clean results
+	// Clean results
         var languageHash = {};
 	$('#results').empty();
 	$('#list').empty();
-	$('#results').load(url + ' #zimtable', function() {
+
+	$('#results').load('http://www.kiwix.org/wiki/Template:ZIMdumps #zimtable', function() {
            $("#container").fadeIn(500);
 
 		// change link to all archives
@@ -106,7 +101,7 @@ function load_content() {
 			var row_download = new Object();
 			row_download.zim_project = $.trim($(this).children('td:first-child').html());
 			row_download.zim_lang_code = $(this).children('td:gt(0)').html();
-			row_download.zim_lang_name = $(this).children('td:gt(0)').html();
+			row_download.zim_lang_name = getLanguageNameFromISO( row_download.zim_lang_code ) || row_download.zim_lang_code;
 			row_download.zim_size = $(this).children('td:gt(1)').html();
 			row_download.zim_date = $(this).children('td:gt(2)').html();
 			row_download.zim_articles = $(this).children('td:gt(3)').html();
@@ -120,7 +115,7 @@ function load_content() {
 			rows_download.push(row_download);
 
 			//making the languague selector from table
-			//adding item to selec if is not repeted
+			//adding item to selec if is not repeated
                         languageHash[ row_download.zim_lang_code ] = row_download.zim_lang_name ;
 			
 		});
@@ -170,7 +165,7 @@ function make_row(row_download){
   if (dl_method == 'bittorrent') {
     zim_link_href += '.torrent';
   }
-  return $('<li><a href="' + zim_link_href + '"><strong>' + row_download.zim_lang_name + ' ' + row_download.zim_project + ' (' + row_download.zim_lang_code + ')</strong>: ' + row_download.zim_date + '<br/>Articles: ' + row_download.zim_articles + ' - ' + row_download.zim_size + '</a></li>');
+  return $('<li><a href="' + zim_link_href + '"><strong>' + row_download.zim_project + ' (' + row_download.zim_lang_code + ')</strong>: ' + row_download.zim_date + '<br/>Articles: ' + row_download.zim_articles + ' - ' + row_download.zim_size + '</a></li>');
 }
 $(document).ready(function() {
 	load_content();	
