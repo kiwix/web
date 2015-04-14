@@ -107,15 +107,45 @@ function load_content() {
 			row_download.zim_articles = $(this).children('td:gt(3)').html();
 			row_download.zim_link = $($(this).children('td:gt(4)').html());
 			row_download.zim_link_href = row_download.zim_link.attr('href');
-
 			row_download.zim_link_name = row_download.zim_link.val();
-			
-			//show results for language selected
 
+                        // Icon
+                        if ( row_download.zim_project ) {
+                           if ( row_download.zim_project.toLowerCase() == 'wikipedia' ) {
+                               row_download.style = 'background: url(https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/50px-Wikipedia-logo-v2.svg.png) no-repeat;';
+                           }
+                           else if ( row_download.zim_project.toLowerCase() == 'wiktionary' ) {
+                               row_download.style = 'background: url(https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Wiktionary-logo.svg/50px-Wiktionary-logo.svg.png) no-repeat;';
+                           }
+                           else if ( row_download.zim_project.toLowerCase() == 'wikivoyage' ) {
+                               row_download.style = 'background: url(https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Wikivoyage-Logo-v3-small-en.png/50px-Wikivoyage-Logo-v3-small-en.png) no-repeat;';
+                           }
+                           else if ( row_download.zim_project.toLowerCase() == 'wikiversity' ) {
+                               row_download.style = 'background: url(https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Wikiversity-logo-en.svg/50px-Wikiversity-logo-en.svg.png) no-repeat;';
+                           }
+                           else if ( row_download.zim_project.toLowerCase() == 'wikibooks' ) {
+                               row_download.style = 'background: url(https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Wikibooks-logo-en-noslogan.svg/50px-Wikibooks-logo-en-noslogan.svg.png) no-repeat;';
+                           }
+                           else if ( row_download.zim_project.toLowerCase() == 'wikisource' ) {
+                               row_download.style = 'background: url(https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Wikisource-logo.png/50px-Wikisource-logo.png) no-repeat;';
+                           }
+                           else if ( row_download.zim_project.toLowerCase() == 'wikiquote' ) {
+                               row_download.style = 'background: url(https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Wikiquote-logo.svg/50px-Wikiquote-logo.svg.png) no-repeat;';
+                           }
+                           else if ( row_download.zim_project.toLowerCase() == 'wikinews' ) {
+                               row_download.style = 'background: url(https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Wikinews-logo.svg/50px-Wikinews-logo.svg.png) no-repeat;';
+                           }
+
+                           if (row_download.style) {
+                               row_download.style += 'background-position: right 0.5em center;';
+                           }
+                        }
+
+			// Show results for language selected
 			rows_download.push(row_download);
 
-			//making the languague selector from table
-			//adding item to selec if is not repeated
+			// Making the languague selector from table
+			// adding item to selec if is not repeated
                         languageHash[ row_download.zim_lang_code ] = row_download.zim_lang_name ;
 			
 		});
@@ -168,7 +198,7 @@ function make_row(row_download){
   if (dl_method == 'bittorrent') {
     zim_link_href += '.torrent';
   }
-  return $('<li><a href="' + zim_link_href + '"><strong>' + ucfirst(row_download.zim_project) + ' (' + row_download.zim_lang_code + ')</strong>: ' + row_download.zim_date + '<br/>Articles: ' + row_download.zim_articles + ' - ' + row_download.zim_size + '</a></li>');
+  return $('<li style="' + (row_download.style || '') + '"><a href="' + zim_link_href + '"><strong>' + ucfirst(row_download.zim_project) + ' (' + row_download.zim_lang_code + ')</strong>: ' + row_download.zim_date + '<br/>Articles: ' + row_download.zim_articles + ' - ' + row_download.zim_size + '</a></li>');
 }
 
 // Uppercase the first letter
