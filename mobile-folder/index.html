@@ -138,7 +138,8 @@ function load_content() {
 	});
 	
 }
-//show search result
+
+// Show search result
 function show_result() {
  $('#results').empty();
  $('ul#list').empty();
@@ -152,21 +153,33 @@ function show_result() {
  });
  $('ul#list').append(all_link);
 }
-//loading base on browser agent language
+
+// Loading base on browser agent language
 function select_language() {
       var language_code =((navigator.language || navigator.userLanguage).substring(0,2));
       $("#languageselector option[value="+language_code+"]").attr("selected", "selected");
       $('#languageselector').selectmenu('refresh',true);
 }
-//make download link row
+
+// Make download link row
 function make_row(row_download){
   var dl_method = $("#downloadmethodselector").val();
   var zim_link_href = row_download.zim_link_href;
   if (dl_method == 'bittorrent') {
     zim_link_href += '.torrent';
   }
-  return $('<li><a href="' + zim_link_href + '"><strong>' + row_download.zim_project + ' (' + row_download.zim_lang_code + ')</strong>: ' + row_download.zim_date + '<br/>Articles: ' + row_download.zim_articles + ' - ' + row_download.zim_size + '</a></li>');
+  return $('<li><a href="' + zim_link_href + '"><strong>' + ucfirst(row_download.zim_project) + ' (' + row_download.zim_lang_code + ')</strong>: ' + row_download.zim_date + '<br/>Articles: ' + row_download.zim_articles + ' - ' + row_download.zim_size + '</a></li>');
 }
+
+// Uppercase the first letter
+function ucfirst(str) {
+  str += '';
+  var f = str.charAt(0)
+    .toUpperCase();
+  return f + str.substr(1);
+}
+
+// Entry point
 $(document).ready(function() {
 	load_content();	
 	$('ul#list').append(all_link);
@@ -174,5 +187,6 @@ $(document).ready(function() {
         $("#languageselector").change(show_result);
 	
 });
+
 </script>
 </html>
