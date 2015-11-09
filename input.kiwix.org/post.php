@@ -12,6 +12,7 @@
     $country = geoip_country_name_by_name($ip) == "" ? "unknown country" : geoip_country_name_by_name($ip);
     $input = $_POST["input"];
     $message = $_POST["message"];
+    $email = $_POST["email"];
     $version = $_POST["version"];
     $browser = $_SERVER['HTTP_USER_AGENT'];
     $language = $_SERVER["HTTP_ACCEPT_LANGUAGE"];
@@ -26,6 +27,7 @@
     $content  = "MESSAGE\n==================================================\n";
     $content .= "$message\n\n";
     $content .= "\nADDITIONAL INFORMATIONS\n==================================================\n";
+    $content .= "Email:         $email\n";
     $content .= "Input:         $input\n";
     $content .= "Version:       $version\n";	
     $content .= "IP:            $ip\n";	
@@ -38,7 +40,7 @@
 	strpos($message, "href=") === false && 
 	strpos($message, "[link]") === false) {
       mail($to, $subject, $content, $headers);
-      insertFeedbackToDatabase(date("Y-m-d H:i:s"), $ip, $country, $message, $language, $input, $version, $browser);
+      insertFeedbackToDatabase(date("Y-m-d H:i:s"), $ip, $country, $message, $email, $language, $input, $version, $browser);
     }
 
     header("Location: /thanks.html");
