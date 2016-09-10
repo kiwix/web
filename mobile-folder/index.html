@@ -44,7 +44,7 @@
 
 
 
-var all_link = $('<li><a href="http://www.kiwix.org/wiki/Special:MyLanguage/Content_in_all_languages">→ Available content in all languages…</a></li>');
+var all_link = $('<li><a href="http://wiki.kiwix.org/wiki/Special:MyLanguage/Content_in_all_languages">→ Available content in all languages…</a></li>');
 var rows_download = new Array();
 var language_list = new Array();
 
@@ -60,13 +60,13 @@ function load_content() {
 	$('#results').empty();
 	$('#list').empty();
 
-	$('#results').load('http://www.kiwix.org/wiki/Template:ZIMdumps #zimtable', function() {
+	$('#results').load('http://wiki.kiwix.org/wiki/Template:ZIMdumps #zimtable', function() {
            $("#container").fadeIn(500);
 
 		// change link to all archives
 		var all_a_elem = $('#zimtable tr:last-child a:last-child');
 		var all_url = all_a_elem.attr('href');
-		all_url = 'http://www.kiwix.org' + all_url;
+		all_url = 'http://wiki.kiwix.org' + all_url;
 		all_a_elem.attr('href', all_url);
 
 		// remove md5 link
