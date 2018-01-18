@@ -35,7 +35,7 @@
     $content .= "Browser - OS:  $browser\n";
     $content .= "Browser lang.: $language\n";
 
-    $blacklist = array("link=http", "href=", "[link]", "clit", "squirt", "amatuer", "botnet", "pay only when", "SEO", "форума", "fake documents");
+    $blacklist = array("link=http", "href=", "[link]", "clit", "squirt", "amatuer", "botnet", "pay only when", "SEO", "форума", "fake documents", "http://hellbro.ru");
     if (strlen($message) > 4 && preg_match_all('/('.join('|', $blacklist).')/i', $message) == 0) {
       mail($to, $subject, $content, $headers);
       insertFeedbackToDatabase(date("Y-m-d H:i:s"), $ip, $country, $message, $email, $language, $input, $version, $browser);
