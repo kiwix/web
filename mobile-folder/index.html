@@ -7,15 +7,22 @@
   <link href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" rel="stylesheet">
   <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="languages.js"></script>
  </head>
 <body>
  <div id="container" class="container" style="display: none; padding: 0.5em 1em 0.5em 1em;">
   <legend>Download content for Kiwix</legend>
-  <p><label for="languageselector">Language:</label></p>
+  
+      <label for="languageselector">Language: &nbsp;<i class="fa fa-language" aria-hidden="true"></i>
+
+          </label>
+  
   <p><select id="languageselector"></select></p>
 
-  <p><label>Download method:</label></p>
+  <label>Download method: &nbsp;
+<i class="fa fa-download" aria-hidden="true"></i>
+</label>
   <p><select id="downloadmethodselector">
       <option value="http" selected="selected">HTTP (easier, can be slow)</option>
       <option value="bittorrent">Bittorrent (faster, requires a torrent client)</option>
